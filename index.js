@@ -1,7 +1,7 @@
 const csv = require('csv-parser');
 const fs = require('fs');
 var stringify = require('csv-stringify');
-
+const fastCSV = require('fast-csv');
 
 // fs.createReadStream('data.csv')
 //   .pipe(csv())
@@ -69,15 +69,20 @@ const data = [
       gender: 'F'
     }
   ];
-const csvWriter = createCsvWriter({
-    path: 'out.csv',
-    header: [
-      {id: 'name', title: 'Name'},
-      {id: 'surname', title: 'Surname'},
-      {id: 'age', title: 'Age'},
-      {id: 'gender', title: 'Gender'},
-    ]
-  });
-  csvWriter
-  .writeRecords(data)
-  .then(()=> console.log('The CSV file was written successfully'));
+// const csvWriter = createCsvWriter({
+//     path: 'out.csv',
+//     header: [
+//       {id: 'name', title: 'Name'},
+//       {id: 'surname', title: 'Surname'},
+//       {id: 'age', title: 'Age'},
+//       {id: 'gender', title: 'Gender'},
+//     ]
+//   });
+//   csvWriter
+//   .writeRecords(data)
+//   .then(()=> console.log('The CSV file was written successfully'));
+
+  var ws = fs.createWriteStream('out.csv');
+  fastCSV.write(data, {headers: true}).on('finish', function() {
+console.log('write csv successfully');
+  }).pipe(ws);
