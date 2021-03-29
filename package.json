@@ -1,0 +1,19 @@
+{
+  "name": "export_csv",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csv-parse": "^4.15.3",
+    "csv-parser": "^3.0.0",
+    "csv-stringify": "^5.6.2",
+    "csv-writer": "^1.6.0",
+    "fs": "0.0.1-security",
+    "node-csv": "^0.1.2"
+  }
+}
