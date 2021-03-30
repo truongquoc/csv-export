@@ -19,16 +19,18 @@ const mainParams = {
 const s3 = new AWS.S3()
 
 const s3Upload = async (flightId, file) => {
-  const data = fs.readFileSync(file);
-  const formatType = ['text/csv']
-  const fileType = await FileType.fromFile(file);
-  console.log('--->file', file);
-  console.log('--->fileType', fileType);
-//   if (_.indexOf(formatType, fileType.mime) === -1) {
-//     fs.unlinkSync(file) // file removed
-//     throw new Error('Bad request Error');
-//   }
-  const folder = `${flightId}/flightInfo`
+
+  fs.readFile(file, async (err, data) => {
+//   const fileType = await FileType.fromBuffer(data)
+//   console.log('--->filetype', fileType);
+//   const formatType = ['text/csv']
+   if (err) throw err;
+  //  s3.upload(params, function(s3Err, data) {
+  //      if (s3Err) throw s3Err
+  //      console.log(`File uploaded successfully at ${data.Location}`)
+  //  });
+  const folder = `${131313131222}/flightInfo`
+
   const params = {
     ...mainParams,
     Body: data,
@@ -44,6 +46,14 @@ const s3Upload = async (flightId, file) => {
       resolve(responseData);
     });
   })
+});
+
+
+//   if (_.indexOf(formatType, fileType.mime) === -1) {
+//     fs.unlinkSync(file) // file removed
+//     throw new Error('Bad request Error');
+//   }
+
 }
 
 

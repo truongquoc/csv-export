@@ -72,29 +72,36 @@ const data = [
       gender: 'F'
     }
   ];
-// const csvWriter = createCsvWriter({
-//     path: 'out.csv',
-//     header: [
-//       {id: 'name', title: 'Name'},
-//       {id: 'surname', title: 'Surname'},
-//       {id: 'age', title: 'Age'},
-//       {id: 'gender', title: 'Gender'},
-//     ]
-//   });
-//   csvWriter
-//   .writeRecords(data)
-//   .then(()=> console.log('The CSV file was written successfully'));
 const export_csv = async () => {
   const flightId = Date.now();
-  var ws = fs.createWriteStream(`${flightId}.csv`);
-  await fastCSV.write(data, {headers: true}).on('finish', async function() {
-console.log('write csv successfully');
+  // var ws = fs.createWriteStream(`${flightId}.csv`);
+  // await fastCSV.write(data, {headers: true}).on('finish', async function() {
+  //   try {
+  //    
+  //   } catch (err) {
+  //     console.log('--->err', err);
+  //   }
+  // }).pipe(ws);
+  const csvWriter = createCsvWriter({
+    path: `${flightId}.csv`,
+    header: [
+      {id: 'name', title: 'Name'},
+      {id: 'surname', title: 'Surname'},
+      {id: 'age', title: 'Age'},
+      {id: 'gender', title: 'Gender'},
+    ]
+  });
+  
+  csvWriter
+  .writeRecords(data)
+  .then(async ()=> {
     try {
-      await s3Upload.s3Upload(flightId, `${flightId}.csv`)
+ await s3Upload.s3Upload(flightId, `${flightId}.csv`)
+ console.log('--->upload successfully');
     } catch (err) {
       console.log('--->err', err);
     }
-  }).pipe(ws);
+  });
 }
 
 export_csv();
