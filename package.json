@@ -9,12 +9,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.875.0",
     "csv-parse": "^4.15.3",
     "csv-parser": "^3.0.0",
     "csv-stringify": "^5.6.2",
     "csv-writer": "^1.6.0",
+    "dotenv": "^8.2.0",
     "fast-csv": "^4.3.6",
+    "file-type": "^16.3.0",
     "fs": "0.0.1-security",
-    "node-csv": "^0.1.2"
+    "lodash": "^4.17.21",
+    "node-csv": "^0.1.2",
+    "path": "^0.12.7"
   }
 }

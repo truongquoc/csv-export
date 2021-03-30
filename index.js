@@ -1,8 +1,11 @@
+'use strict'
 const csv = require('csv-parser');
 const fs = require('fs');
 var stringify = require('csv-stringify');
 const fastCSV = require('fast-csv');
+const s3Upload = require('./s3storage');
 
+const FileType = require('file-type');
 // fs.createReadStream('data.csv')
 //   .pipe(csv())
 //   .on('data', (row) => {
@@ -81,8 +84,17 @@ const data = [
 //   csvWriter
 //   .writeRecords(data)
 //   .then(()=> console.log('The CSV file was written successfully'));
-
-  var ws = fs.createWriteStream('out.csv');
-  fastCSV.write(data, {headers: true}).on('finish', function() {
+const export_csv = async () => {
+  const flightId = Date.now();
+  var ws = fs.createWriteStream(`${flightId}.csv`);
+  await fastCSV.write(data, {headers: true}).on('finish', async function() {
 console.log('write csv successfully');
+    try {
+      await s3Upload.s3Upload(flightId, `${flightId}.csv`)
+    } catch (err) {
+      console.log('--->err', err);
+    }
   }).pipe(ws);
+}
+
+export_csv();
